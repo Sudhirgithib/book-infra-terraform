@@ -25,7 +25,7 @@ concurrency:
 
 env:
   TF_IN_AUTOMATION: true
-  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_REGION: us-east-1
   TF_VAR_db_username: ${{ secrets.TF_VAR_db_username }}
   TF_VAR_db_password: ${{ secrets.TF_VAR_db_password }}
 
@@ -51,13 +51,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Terraform Init
-        run: |
-          terraform init -input=false \
-            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
-            -backend-config="key=${{ vars.TF_STATE_KEY }}" \
-            -backend-config="region=${{ vars.AWS_REGION }}" \
-            -backend-config="dynamodb_table=${{ vars.TF_LOCK_TABLE }}" \
-            -backend-config="encrypt=true"
+        run: terraform init -input=false
 
   validate:
     name: Terraform Validate
@@ -78,16 +72,10 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: us-east-1
 
       - name: Terraform Init
-        run: |
-          terraform init -input=false \
-            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
-            -backend-config="key=${{ vars.TF_STATE_KEY }}" \
-            -backend-config="region=${{ vars.AWS_REGION }}" \
-            -backend-config="dynamodb_table=${{ vars.TF_LOCK_TABLE }}" \
-            -backend-config="encrypt=true"
+        run: terraform init -input=false
 
       - name: Terraform Validate
         run: terraform validate -no-color
@@ -111,14 +99,10 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: us-east-1
 
       - name: Terraform Init
-        run: |
-          terraform init -input=false 
-            
+        run: terraform init -input=false
 
       - name: Terraform Plan
         run: terraform plan -input=false -no-color
-# test commit
-# trigger commit 123
