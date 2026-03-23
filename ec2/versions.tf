@@ -5,4 +5,10 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  backend "s3" {
+    bucket = "book-infra-terraform-123"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
 }
