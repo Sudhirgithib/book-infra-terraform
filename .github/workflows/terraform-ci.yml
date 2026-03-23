@@ -115,12 +115,8 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terraform init -input=false \
-            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
-            -backend-config="key=${{ vars.TF_STATE_KEY }}" \
-            -backend-config="region=${{ vars.AWS_REGION }}" \
-            -backend-config="dynamodb_table=${{ vars.TF_LOCK_TABLE }}" \
-            -backend-config="encrypt=true"
+          terraform init -input=false 
+            
 
       - name: Terraform Plan
         run: terraform plan -input=false -no-color
